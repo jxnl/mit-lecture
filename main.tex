@@ -1,0 +1,74 @@
+\documentclass[aspectratio=169]{beamer}
+
+% Theme and color settings
+\usetheme{metropolis}           % Use metropolis theme
+
+% Define subtle gray for footer
+\definecolor{footergray}{RGB}{128,128,128}
+\setbeamercolor{footline}{fg=footergray,bg=}
+
+% Custom footline with subtle website (updated)
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1ex,left]{footline}%
+      \hspace*{2ex}\tiny{jxnl.co}
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1ex,right]{footline}%
+      \tiny{\insertframenumber}\hspace*{2ex}
+    \end{beamercolorbox}%
+  }%
+}
+
+% Left justify content
+\setbeamertemplate{items}[square]
+\setbeamersize{text margin left=1em,text margin right=1em}
+\setlength{\leftmargini}{1em}
+\setlength{\leftmarginii}{1em}
+\setlength{\leftmarginiii}{1em}
+
+% Packages
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{cite}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{wasysym} % For checkmarks
+
+% Include intro file
+\input{intro}
+
+% Additional TikZ libraries for better diagrams
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,shapes.multipart,decorations.pathreplacing,decorations.markings}
+
+% Title information
+\title{Improving RAG Applications}
+\subtitle{For MIT Generative AI Course}
+\author{Jason Liu}
+\institute{Independent Consultant}
+\date{\today}
+
+% Start of document
+\begin{document}
+
+% Title frame
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Table of contents frame
+\begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+
+% Insert reusable frames
+\introframe
+
+% End of presentation
+\end{document} 
