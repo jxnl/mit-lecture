@@ -36,3 +36,9 @@
 *.pre
 *.snm
 *.vrb 
+
+## Context files
+context/
+
+## Lecture sections
+lecture_sections/
