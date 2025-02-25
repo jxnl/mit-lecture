@@ -1,0 +1,457 @@
+% Practical Implementation Section
+\newcommand{\practicalimplementationframe}{
+    \section{Practical Implementation Strategies}
+
+    \begin{frame}
+        \frametitle{Synthetic Data Generation}
+        \begin{itemize}
+            \item Use LLMs to generate domain-specific questions from your documents
+            \item Create diverse query types:
+            \begin{itemize}
+                \item Factual: "What was the revenue in Q2 2023?"
+                \item Comparative: "How did Q2 performance compare to Q1?"
+                \item Analytical: "What factors contributed to the margin decline?"
+            \end{itemize}
+            \item Include edge cases and known failure modes
+            \item Example prompt: 
+            \begin{quote}
+                \small "Generate 10 questions a financial analyst might ask about this earnings report, including questions about revenue trends, profitability metrics, and forward guidance."
+            \end{quote}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Evaluation Metrics}
+        \begin{itemize}
+            \item \textbf{Recall@k}: Percentage of relevant documents in top k results
+            \begin{itemize}
+                \item Critical for RAG - can't generate from missing information
+                \item Target 80-90\% recall before focusing on generation quality
+            \end{itemize}
+            \item \textbf{MRR (Mean Reciprocal Rank)}: Position of first relevant document
+            \begin{itemize}
+                \item Higher weight to documents appearing earlier in results
+                \item Useful for prioritizing most relevant content
+            \end{itemize}
+            \item \textbf{Latency}: Response time for retrieval operations
+            \begin{itemize}
+                \item Critical for user experience and scaling
+                \item Balance between accuracy and speed
+            \end{itemize}
+            \item \textbf{Coverage}: Percentage of query types that can be answered
+            \begin{itemize}
+                \item Identifies gaps in retrieval capabilities
+                \item Helps prioritize new index or tool development
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Evaluation Implementation Tips}
+        \begin{itemize}
+            \item Start with 100-200 test examples across different categories
+            \begin{itemize}
+                \item 20-30 examples per major query type is sufficient
+                \item Include examples from each domain area
+            \end{itemize}
+            \item Automate evaluation to run in under 1 minute
+            \begin{itemize}
+                \item Fast feedback loops enable rapid iteration
+                \item Run after every significant change
+            \end{itemize}
+            \item Log all failures for systematic analysis
+            \begin{itemize}
+                \item Store full context of failed retrievals
+                \item Look for patterns in failure modes
+                \item Use failures to generate new test cases
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Query Segmentation Approaches}
+        \begin{itemize}
+            \item \textbf{Intent-based}: What is the user trying to accomplish?
+            \begin{itemize}
+                \item Information seeking vs. task completion
+                \item Exploratory vs. targeted queries
+                \item Example: "Tell me about X" vs. "How do I do Y?"
+            \end{itemize}
+            \item \textbf{Domain-based}: Which knowledge area does this touch?
+            \begin{itemize}
+                \item Subject matter categories
+                \item Technical vs. business vs. compliance
+                \item Example: Financial metrics vs. operational details
+            \end{itemize}
+            \item \textbf{Complexity-based}: Simple lookup vs. multi-step reasoning
+            \begin{itemize}
+                \item Single fact retrieval vs. synthesis across documents
+                \item Explicit vs. implicit information
+                \item Example: Direct value lookup vs. trend analysis
+            \end{itemize}
+            \item \textbf{Data-type}: Text, table, image, code, or multi-modal
+            \begin{itemize}
+                \item Different content formats require different handling
+                \item Example: Narrative text vs. tabular financial data
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Segmentation Implementation}
+        \begin{itemize}
+            \item Use a classifier prompt to categorize each query
+            \begin{itemize}
+                \item Chain-of-thought prompting improves accuracy
+                \item Allow multiple categories per query when relevant
+            \end{itemize}
+            \item Track performance metrics per segment
+            \begin{itemize}
+                \item Separate dashboards for each major category
+                \item Compare performance across segments
+            \end{itemize}
+            \item Identify segments with highest volume × lowest performance
+            \begin{itemize}
+                \item Focus improvements on high-impact areas
+                \item Prioritize based on business value
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Example Segmentation for Financial Projects}
+        \begin{itemize}
+            \item \textbf{Numerical extraction}
+            \begin{itemize}
+                \item Finding specific values in financial statements
+                \item Example: "What was the EPS in Q2 2023?"
+                \item Requires precise table extraction and entity recognition
+            \end{itemize}
+            \item \textbf{Trend analysis}
+            \begin{itemize}
+                \item Identifying patterns over time in financial data
+                \item Example: "How has the gross margin changed over the last 4 quarters?"
+                \item Requires time-series data and comparative analysis
+            \end{itemize}
+            \item \textbf{Comparative analysis}
+            \begin{itemize}
+                \item Comparing entities, periods, or metrics
+                \item Example: "How does Company X's ROI compare to industry average?"
+                \item Requires multi-document retrieval and normalization
+            \end{itemize}
+            \item \textbf{Risk assessment}
+            \begin{itemize}
+                \item Evaluating potential issues or concerns
+                \item Example: "What are the key risk factors mentioned in the report?"
+                \item Requires understanding of risk terminology and context
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Hybrid Search Implementation}
+        \begin{itemize}
+            \item Combine BM25/lexical search with semantic/embedding search
+            \begin{itemize}
+                \item Lexical: Exact keyword matching (Elasticsearch, BM25)
+                \item Semantic: Meaning-based matching (embeddings)
+                \item Hybrid: Best of both approaches
+            \end{itemize}
+            \item Weight results based on query characteristics
+            \begin{itemize}
+                \item Adjust weights dynamically based on query type
+                \item Use query classifier to determine optimal weights
+            \end{itemize}
+            \item Example implementation:
+            \begin{itemize}
+                \item Higher weight on lexical for specific terms, codes, IDs
+                \item Higher weight on semantic for concepts, themes, topics
+                \item Ensemble methods to combine results effectively
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Metadata Enhancement}
+        \begin{itemize}
+            \item Extract structured data during ingestion
+            \begin{itemize}
+                \item Dates, time periods, fiscal quarters
+                \item Entity names, categories, product types
+                \item Document types, sections, importance levels
+            \end{itemize}
+            \item Create filters based on document attributes
+            \begin{itemize}
+                \item Filter by date range, document type, entity
+                \item Combine filters with semantic search
+                \item Improve precision without hurting recall
+            \end{itemize}
+            \item Enable faceted search capabilities
+            \begin{itemize}
+                \item Allow users to narrow results by metadata
+                \item Provide context-aware filtering options
+                \item Improve user experience and control
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Specialized Indices}
+        \begin{itemize}
+            \item Create separate indices for different content types
+            \begin{itemize}
+                \item Text documents (reports, articles, narratives)
+                \item Tabular data (financial statements, metrics)
+                \item Images and diagrams (charts, graphs, visuals)
+                \item Code and structured data (SQL, JSON, XML)
+            \end{itemize}
+            \item Optimize chunking strategy per content type
+            \begin{itemize}
+                \item Text: Semantic paragraphs or fixed-size chunks
+                \item Tables: Preserve headers and context
+                \item Code: Function or class-level chunks
+            \end{itemize}
+            \item Example specialized indices:
+            \begin{itemize}
+                \item Table index with header preservation
+                \item Text index with paragraph-level chunking
+                \item Entity index for quick lookups
+                \item Time-series index for historical data
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Tool-Based Approach}
+        \begin{itemize}
+            \item Define clear interfaces for each specialized retrieval method
+            \begin{itemize}
+                \item Consistent input/output formats
+                \item Well-defined parameters and options
+                \item Clear documentation and examples
+            \end{itemize}
+            \item Create a router that selects appropriate tool(s) for each query
+            \begin{itemize}
+                \item Use LLM to classify and route queries
+                \item Consider confidence scores for tool selection
+                \item Fall back to general search when uncertain
+            \end{itemize}
+            \item Consider parallel execution for better performance
+            \begin{itemize}
+                \item Run multiple tools simultaneously when appropriate
+                \item Merge results with intelligent ranking
+                \item Balance latency vs. thoroughness
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Query Routing Implementation}
+        \begin{itemize}
+            \item Start with 3-5 core tools based on your domain needs
+            \begin{itemize}
+                \item Begin with the most common query types
+                \item Add specialized tools as patterns emerge
+                \item Keep interfaces consistent across tools
+            \end{itemize}
+            \item Test routing accuracy with synthetic queries
+            \begin{itemize}
+                \item Create test cases for each tool
+                \item Measure routing precision and recall
+                \item Identify confusion patterns between tools
+            \end{itemize}
+            \item Measure tool recall: Is the right tool being selected?
+            \begin{itemize}
+                \item Track correct tool selection rate
+                \item Monitor unnecessary tool calls
+                \item Improve router prompts based on errors
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Example Tools for Financial Domain}
+        \begin{itemize}
+            \item \texttt{table\_search}: Find and extract tabular financial data
+            \begin{itemize}
+                \item Specialized for financial statements, tables, metrics
+                \item Preserves row/column relationships
+                \item Example: "What was the operating margin in Q2?"
+            \end{itemize}
+            \item \texttt{text\_search}: Retrieve narrative sections of reports
+            \begin{itemize}
+                \item Optimized for MD\&A, risk factors, footnotes
+                \item Semantic paragraph-level retrieval
+                \item Example: "Explain the factors affecting revenue growth"
+            \end{itemize}
+            \item \texttt{entity\_lookup}: Find information about specific companies
+            \begin{itemize}
+                \item Company profiles, key metrics, industry data
+                \item Fast retrieval of entity-specific information
+                \item Example: "What is Company X's market position?"
+            \end{itemize}
+            \item \texttt{time\_series}: Retrieve historical financial metrics
+            \begin{itemize}
+                \item Optimized for trend analysis and comparisons
+                \item Handles time-based queries efficiently
+                \item Example: "Show revenue growth over the last 8 quarters"
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Effective Feedback Mechanisms}
+        \begin{itemize}
+            \item Thumbs up/down with reason categorization
+            \begin{itemize}
+                \item Simple binary feedback is better than none
+                \item Add reason categories for negative feedback
+                \item Example categories: Irrelevant, Incomplete, Incorrect, Outdated
+            \end{itemize}
+            \item Citation validation
+            \begin{itemize}
+                \item "Were these sources helpful?" for each citation
+                \item Allow users to mark irrelevant citations
+                \item Track which sources are most valuable
+            \end{itemize}
+            \item Implicit signals
+            \begin{itemize}
+                \item Time spent reviewing results
+                \item Follow-up questions or refinements
+                \item Copied content or saved responses
+                \item Repeated queries indicating dissatisfaction
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Feedback Implementation Tips}
+        \begin{itemize}
+            \item Make feedback UI prominent and simple
+            \begin{itemize}
+                \item Large, obvious buttons increase engagement
+                \item Modal dialogs get 4-5x more feedback than subtle buttons
+                \item Keep the initial feedback step quick (1-2 clicks)
+            \end{itemize}
+            \item Categorize negative feedback by failure type
+            \begin{itemize}
+                \item Retrieval failures vs. generation issues
+                \item Missing information vs. incorrect information
+                \item Technical errors vs. content gaps
+            \end{itemize}
+            \item Store feedback with full context for analysis
+            \begin{itemize}
+                \item Original query and retrieved documents
+                \item Generated response and citations
+                \item User feedback and any follow-up actions
+                \item System metadata (latency, model version, etc.)
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Continuous Improvement Cycle}
+        \begin{itemize}
+            \item Weekly review of feedback patterns
+            \begin{itemize}
+                \item Analyze trends in negative feedback
+                \item Identify common failure modes
+                \item Track improvement over time
+            \end{itemize}
+            \item Prioritize fixes based on frequency and impact
+            \begin{itemize}
+                \item Focus on high-volume, high-impact issues first
+                \item Balance quick wins vs. structural improvements
+                \item Create targeted test cases for each issue
+            \end{itemize}
+            \item Use feedback to generate new test cases
+            \begin{itemize}
+                \item Convert real failures into synthetic test examples
+                \item Expand test coverage based on user behavior
+                \item Validate fixes against expanded test set
+            \end{itemize}
+            \item Retrain/fine-tune models with collected data
+            \begin{itemize}
+                \item Use feedback to create training pairs
+                \item Fine-tune embeddings or rerankers
+                \item Improve router accuracy with real examples
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]
+        \frametitle{Code Example: Simple Evaluation Pipeline}
+        \begin{lstlisting}[basicstyle=\tiny\ttfamily, breaklines=true]
+def evaluate_retrieval(test_queries, retriever, k=5):
+    results = {}
+    for query_id, query in test_queries.items():
+        # Get ground truth documents
+        relevant_docs = query["relevant_docs"]
+        
+        # Retrieve documents
+        retrieved_docs = retriever.search(
+            query["text"], k=k
+        )
+        
+        # Calculate metrics
+        recall = len(set(retrieved_docs) & 
+                     set(relevant_docs)) / len(relevant_docs)
+        
+        results[query_id] = {
+            "query": query["text"],
+            "recall": recall,
+            "retrieved": retrieved_docs,
+            "relevant": relevant_docs
+        }
+    
+    # Aggregate metrics
+    avg_recall = sum(r["recall"] for r in 
+                    results.values()) / len(results)
+    
+    return avg_recall, results
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Implementation Roadmap: Weeks 1-4}
+        \begin{itemize}
+            \item \textbf{Week 1-2: Evaluation Foundation}
+            \begin{itemize}
+                \item Generate synthetic test data for your domain
+                \item Implement basic retrieval evaluation pipeline
+                \item Establish baseline metrics for recall and precision
+                \item Create initial dashboard for tracking performance
+            \end{itemize}
+            \item \textbf{Week 3-4: Segmentation \& Analysis}
+            \begin{itemize}
+                \item Define query categories relevant to your domain
+                \item Classify existing queries into segments
+                \item Analyze performance by segment
+                \item Identify priority improvement areas
+                \item Create segment-specific test sets
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Implementation Roadmap: Weeks 5-8}
+        \begin{itemize}
+            \item \textbf{Week 5-6: Specialized Retrieval}
+            \begin{itemize}
+                \item Implement domain-specific indices
+                \item Build basic query router
+                \item Test with synthetic and real queries
+                \item Optimize chunking strategies
+                \item Implement metadata filters
+            \end{itemize}
+            \item \textbf{Week 7-8: Feedback \& Refinement}
+            \begin{itemize}
+                \item Add feedback collection mechanisms
+                \item Analyze initial feedback
+                \item Begin fine-tuning based on results
+                \item Implement continuous improvement process
+                \item Set up regular review cadence
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+} % End of practicalimplementationframe command 

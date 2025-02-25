@@ -1,0 +1,476 @@
+% Feedback Collection & Continuous Improvement Section
+
+% Effective Feedback Mechanisms
+\begin{frame}
+    \frametitle{User Feedback: Binary Feedback}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Simple Binary Feedback with Categories}
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{Feedback UI}
+        \begin{itemize}
+            \item Thumbs up/down buttons
+            \item Simple and prominent
+            \item Quick to complete
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Reason Categories}
+        \begin{itemize}
+            \item Irrelevant results
+            \item Incomplete answer
+            \item Incorrect information
+            \item Outdated content
+        \end{itemize}
+    \end{columns}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Key insight:} Even simple feedback is better than none
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{User Feedback: Citation \& Implicit Signals}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{Citation Validation}
+        \begin{itemize}
+            \item "Were these sources helpful?"
+            \item Mark irrelevant citations
+            \item Track valuable sources
+            \item Identify missing citations
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Implicit Signals}
+        \begin{itemize}
+            \item Time spent reviewing results
+            \item Follow-up questions
+            \item Copied/saved content
+            \item Repeated queries
+        \end{itemize}
+    \end{columns}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Pro tip:} Combine explicit and implicit signals for a complete picture
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Feedback Implementation Tips
+\begin{frame}
+    \frametitle{Feedback UI Design}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{UI Elements}
+        \begin{itemize}
+            \item Large, obvious buttons
+            \item Modal dialogs for higher engagement
+            \item 1-2 clicks for initial feedback
+            \item Optional detailed feedback
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Feedback Categories}
+        \begin{itemize}
+            \item Retrieval vs. generation issues
+            \item Missing vs. incorrect info
+            \item Technical errors vs. content gaps
+            \item UI/UX problems
+        \end{itemize}
+    \end{columns}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!10, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Did you know?} Modal dialogs get 4-5x more feedback than subtle buttons
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Feedback Storage \& Analysis}
+    
+    \textbf{Store Complete Context}
+    \begin{itemize}
+        \item Original query and retrieved documents
+        \item Generated response and citations
+        \item User feedback and follow-up actions
+        \item System metadata (latency, model version, etc.)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Example schema:}\\
+                \texttt{\{query, results, response, feedback, metadata\}}
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Continuous Improvement Cycle
+\begin{frame}
+    \frametitle{Feedback Analysis Cycle}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{Weekly Review}
+        \begin{itemize}
+            \item Analyze feedback patterns
+            \item Track trends over time
+            \item Identify common failures
+            \item Share insights with team
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Prioritization}
+        \begin{itemize}
+            \item Focus on high-volume issues
+            \item Balance quick wins vs. structural fixes
+            \item Create targeted test cases
+            \item Track impact of fixes
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Continuous Improvement Process}
+    
+    \textbf{Creating Test Cases}
+    \begin{itemize}
+        \item Convert real failures into test examples
+        \item Expand test coverage based on user behavior
+        \item Validate fixes against expanded test set
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Model Refinement}
+    \begin{itemize}
+        \item Use feedback to create training pairs
+        \item Fine-tune embeddings or rerankers
+        \item Improve router accuracy with real examples
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Key milestone:} When feedback drives automatic system improvements
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Case Study: Rejected URLs in Sales Follow-Up
+\begin{frame}
+    \frametitle{Case Study: Rejected URLs in Sales Follow-Up}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{The Challenge}
+        \begin{itemize}
+            \item System wrote post-call follow-up emails with links
+            \item AI kept hallucinating or mistyping certain URLs
+            \item 4\% error rate on links in emails
+            \item Damaged credibility with customers
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{The Solution}
+        \begin{itemize}
+            \item Introduced URL validator
+            \item Rejected links to non-existent pages or unknown domains
+            \item Asked model to remove/fix invalid links
+            \item Later fine-tuned model to avoid invalid links
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Key Takeaway:} Simple post-processing + feedback loop reduced errors to nearly 0\%
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Case Study: Changing Copy to Collect More Feedback
+\begin{frame}
+    \frametitle{Case Study: Changing Copy to Collect More Feedback}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{The Challenge}
+        \begin{itemize}
+            \item Team wanted more thumbs up/down data
+            \item Tiny button labeled "How did we do?" hidden at top
+            \item Very few users provided ratings
+            \item Insufficient data for measuring correctness
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{The Solution}
+        \begin{itemize}
+            \item Changed copy to "Did we answer your question?"
+            \item Made feedback UI larger and more central
+            \item Requested brief reason for thumbs down
+            \item Categorized feedback for targeted improvements
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Key Takeaway:} UI changes increased feedback volume 4-5x, providing crucial data for improvements
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Streaming Responses - New section based on Week 6 content
+\begin{frame}
+    \frametitle{Streaming Responses: Improving Perceived Performance}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{Benefits of Streaming}
+        \begin{itemize}
+            \item Reduces perceived latency by ~11\%
+            \item Users tolerate longer wait times
+            \item Allows immediate reading while generation continues
+            \item Provides visual feedback on progress
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Implementation Approaches}
+        \begin{itemize}
+            \item Stream tokens as they're generated
+            \item Show interstitials during processing steps
+            \item Render skeleton screens during loading
+            \item Display tool execution in real-time
+        \end{itemize}
+    \end{columns}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Did you know?} Users will wait up to 8 seconds longer when given visual feedback
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Streaming Implementation: Interstitials \& UI}
+    
+    \begin{itemize}
+        \item \textbf{Interstitial messages} during processing steps:
+        \begin{itemize}
+            \item "Thinking..." → "Searching documents..." → "Reading results..." → "Generating response..."
+        \end{itemize}
+        \item \textbf{Structured streaming} for complex responses:
+        \begin{itemize}
+            \item Stream partial JSON objects with content, citations, follow-ups
+            \item Parse and render components as they arrive
+        \end{itemize}
+        \item \textbf{Tool execution visualization}:
+        \begin{itemize}
+            \item Show function calls and parameters in real-time
+            \item Allow user edits to parameters before execution
+        \end{itemize}
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Key insight:} Streaming isn't just about tokens—it's about communicating process
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Rejecting Work - New section based on Week 6 content
+\begin{frame}
+    \frametitle{Rejecting Work: Setting Expectations}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{The Problem}
+        \begin{itemize}
+            \item Not all queries can be answered well
+            \item 90\% success rate means 10\% failures
+            \item Attempting all queries reduces trust
+            \item Users blame system for poor answers
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{The Solution}
+        \begin{itemize}
+            \item Identify query types with low success
+            \item Gracefully reject answering these
+            \item Set clear expectations with users
+            \item Collect feedback on rejected queries
+        \end{itemize}
+    \end{columns}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Example:} "I can't confidently answer this question with the information available. Would you like me to try anyway with the understanding that the answer may be incomplete?"
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Showcasing Capabilities}
+    
+    \begin{itemize}
+        \item \textbf{Highlight what your system does well}:
+        \begin{itemize}
+            \item Suggest example queries users can try
+            \item Demonstrate different capabilities through UI
+            \item Show different content types you can handle
+        \end{itemize}
+        \item \textbf{Implementation approaches}:
+        \begin{itemize}
+            \item Categorized example queries on landing page
+            \item "Focus" buttons to expand capability options
+            \item Follow-up suggestions after each response
+            \item Special UI components for different content types
+        \end{itemize}
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Key insight:} Users will use the capabilities you highlight and ignore those you don't
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Chain of Thought and Monologuing - New section based on Week 6 content
+\begin{frame}
+    \frametitle{Chain of Thought: Improving Reasoning}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{Benefits}
+        \begin{itemize}
+            \item ~10\% performance improvement
+            \item Makes complex reasoning possible
+            \item Provides transparency into model thinking
+            \item Enables better error analysis
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Implementation}
+        \begin{itemize}
+            \item Structure as XML components
+            \item Stream thinking process separately
+            \item Allow users to expand/collapse
+            \item Collect feedback on reasoning errors
+        \end{itemize}
+    \end{columns}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Key insight:} Chain of thought can be the difference between usable and unusable
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Monologuing: Managing Complex Contexts}
+    
+    \begin{itemize}
+        \item \textbf{Reiterate relevant information} before generating responses:
+        \begin{itemize}
+            \item Restate key instructions from the prompt
+            \item Summarize relevant parts of the context
+            \item Co-locate related information for better attention
+        \end{itemize}
+        \item \textbf{Multi-stage monologuing} for complex tasks:
+        \begin{itemize}
+            \item Identify relevant variables first
+            \item Extract relevant sections from documents
+            \item Connect information across sources
+            \item Reason about options before generating final response
+        \end{itemize}
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Case study:} SaaS pricing quotes improved dramatically with 4-stage monologuing
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Key Insights for Week 6
+\begin{frame}
+    \frametitle{Week 6: Key Insights}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Product Considerations: UX, Feedback \& Prompting}
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \begin{itemize}
+        \item \textbf{Design prominent feedback mechanisms}
+        \begin{itemize}
+            \item Make feedback UI large and obvious
+            \item Use modal dialogs for higher engagement
+        \end{itemize}
+        \item \textbf{Implement streaming responses}
+        \begin{itemize}
+            \item Reduce perceived latency with visual feedback
+            \item Use interstitials to communicate processing steps
+        \end{itemize}
+        \item \textbf{Know when to reject work}
+        \begin{itemize}
+            \item Set clear expectations for low-confidence answers
+            \item Showcase capabilities you excel at
+        \end{itemize}
+        \item \textbf{Leverage chain of thought \& monologuing}
+        \begin{itemize}
+            \item Improve reasoning with structured thinking
+            \item Reiterate key information for better context handling
+        \end{itemize}
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Remember:} Small UX and prompting improvements can dramatically increase effectiveness
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame} 

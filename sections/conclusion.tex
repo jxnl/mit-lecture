@@ -1,0 +1,119 @@
+% Conclusion Section
+\newcommand{\conclusionframe}{
+    \section{Conclusion \& Next Steps}
+
+    \begin{frame}
+        \frametitle{Key Takeaways}
+        \begin{itemize}
+            \item \textbf{Measurement First, Always}
+            \begin{itemize}
+                \item Start with clear metrics before making changes
+                \item Focus on retrieval recall as a leading indicator
+                \item Build fast evaluation cycles with synthetic data
+            \end{itemize}
+            \item \textbf{Systematic Over Ad-hoc}
+            \begin{itemize}
+                \item Segment queries to focus improvements
+                \item Build specialized tools for different content types
+                \item Create feedback loops for continuous improvement
+            \end{itemize}
+            \item \textbf{Domain Expertise Matters}
+            \begin{itemize}
+                \item Generic embeddings aren't enough for specialized domains
+                \item Fine-tune with domain-specific feedback
+                \item Balance technical implementation with domain knowledge
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Common Pitfalls to Avoid}
+        \begin{itemize}
+            \item \textbf{Intervention Bias}
+            \begin{itemize}
+                \item Adding more prompt engineering without measurement
+                \item Accumulating technical debt through unproven additions
+                \item Focusing on generation quality before fixing retrieval
+            \end{itemize}
+            \item \textbf{Absence Blindness}
+            \begin{itemize}
+                \item Missing retrieval problems because they're less visible
+                \item Not measuring what you can't directly observe
+                \item Assuming generation issues when retrieval is the problem
+            \end{itemize}
+            \item \textbf{Premature Optimization}
+            \begin{itemize}
+                \item Fine-tuning models before collecting enough data
+                \item Building complex architectures before proving value
+                \item Optimizing for edge cases before handling common cases
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Resources \& Tools}
+        \begin{itemize}
+            \item \textbf{Evaluation Frameworks}
+            \begin{itemize}
+                \item RAGAS: Comprehensive RAG evaluation toolkit
+                \item LangChain Evaluation: Built-in metrics for RAG systems
+                \item TruLens: Feedback-driven evaluation for LLM applications
+            \end{itemize}
+            \item \textbf{Retrieval \& Embedding Tools}
+            \begin{itemize}
+                \item Sentence Transformers: Fine-tunable embedding models
+                \item Cohere Rerank: Powerful reranking capabilities
+                \item Weaviate/Pinecone/Qdrant: Vector databases with hybrid search
+            \end{itemize}
+            \item \textbf{Feedback Collection}
+            \begin{itemize}
+                \item Promptfoo: Prompt testing and evaluation
+                \item Argilla: Data collection and annotation platform
+                \item Weights \& Biases: Experiment tracking and visualization
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Questions to Guide Your Implementation}
+        \begin{enumerate}
+            \item What are your most critical query types and how will you measure success for each?
+            \item How will you generate synthetic test data that matches your domain?
+            \item What specialized retrieval methods do you need for your content types?
+            \item How will you collect and incorporate user feedback?
+            \item What's your plan for continuous improvement over time?
+        \end{enumerate}
+        \vspace{0.5cm}
+        \begin{itemize}
+            \item Remember: The goal is to build a system that gets better with every interaction
+            \item Start simple, measure thoroughly, and improve systematically
+            \item Focus on the highest impact areas first based on data, not intuition
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Contact \& Follow-up}
+        \begin{itemize}
+            \item \textbf{Office Hours}
+            \begin{itemize}
+                \item Available for project-specific questions
+                \item Schedule via email: jason@jxnl.co
+            \end{itemize}
+            \item \textbf{Additional Resources}
+            \begin{itemize}
+                \item Course materials and code examples: github.com/jxnl/mit-rag
+                \item Reference implementations for different domains
+                \item Recommended reading and tutorials: jxnl.co/writing
+            \end{itemize}
+            \item \textbf{Community}
+            \begin{itemize}
+                \item Join the discussion group for ongoing support
+                \item Share your progress and learnings
+                \item Connect with others working on similar challenges
+            \end{itemize}
+        \end{itemize}
+        \vspace{0.5cm}
+        \centering
+        Thank you! Questions?
+    \end{frame}
+} % End of conclusionframe command 

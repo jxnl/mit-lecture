@@ -1,0 +1,181 @@
+% Evaluation Section - Data Generation and Metrics
+
+% Synthetic Data Generation - Split into two slides
+\begin{frame}
+    \frametitle{Synthetic Data Generation (1/2)}
+    \begin{itemize}
+        \item Use LLMs to generate domain-specific questions from your documents
+        \item Create diverse query types:
+        \begin{itemize}
+            \item Factual: "What was the revenue in Q2 2023?"
+            \item Comparative: "How did Q2 performance compare to Q1?"
+            \item Analytical: "What factors contributed to the margin decline?"
+        \end{itemize}
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Benefits:} Controllable test data, covers edge cases, identifies blind spots
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Synthetic Data Generation (2/2)}
+    \begin{itemize}
+        \item Include edge cases and known failure modes
+        \item Example prompt: 
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!10, text width=8.5cm, align=left, padding=0.5cm] {
+                \small "Generate 10 questions a financial analyst might ask about this earnings report, including questions about revenue trends, profitability metrics, and forward guidance."
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \vspace{0.3cm}
+    \begin{itemize}
+        \item Aim for 100-200 diverse test examples across categories
+    \end{itemize}
+\end{frame}
+
+% Evaluation Metrics - Split into two frames
+\begin{frame}
+    \frametitle{Retrieval Metrics (1/2)}
+    \begin{itemize}
+        \item \textbf{Recall@k}: Percentage of relevant documents in top k results
+        \begin{itemize}
+            \item Critical for RAG - can't generate from missing information
+            \item Target 80-90\% recall before focusing on generation quality
+        \end{itemize}
+        \item \textbf{MRR (Mean Reciprocal Rank)}: Position of first relevant document
+        \begin{itemize}
+            \item Higher weight to documents appearing earlier in results
+            \item Useful for prioritizing most relevant content
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Retrieval Metrics (2/2)}
+    \begin{itemize}
+        \item \textbf{Latency}: Response time for retrieval operations
+        \begin{itemize}
+            \item Critical for user experience and scaling
+            \item Balance between accuracy and speed
+        \end{itemize}
+        \item \textbf{Coverage}: Percentage of query types that can be answered
+        \begin{itemize}
+            \item Identifies gaps in retrieval capabilities
+            \item Helps prioritize new index or tool development
+        \end{itemize}
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=8cm, align=center, padding=0.3cm] {
+                \textbf{Key insight:} Focus on recall first! Poor recall = ceiling on overall quality
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Key Insights for Week 1
+\begin{frame}
+    \frametitle{Week 1: Key Insights}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Evaluation Systems: The Foundation for Improvement}
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \begin{itemize}
+        \item \textbf{Start with synthetic data} to enable rapid testing cycles
+        \item \textbf{Focus on retrieval quality first} before optimizing generation
+        \item \textbf{Build fast evaluation pipelines} that run in under a minute
+        \item \textbf{Collect 100-200 diverse test examples} across query categories
+        \item \textbf{Prioritize recall} as the leading indicator of system quality
+        \item \textbf{Log and analyze failures} systematically to identify patterns
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Remember:} You can't generate accurate answers from missing information
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Implementation Tips - Split and focused
+\begin{frame}
+    \frametitle{Evaluation Implementation}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Test Size}
+        \begin{itemize}
+            \item 100-200 test examples across categories
+            \item 20-30 examples per major query type
+            \item Include examples from each domain area
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{Automation}
+        \begin{itemize}
+            \item Automate evaluation to run in under 1 minute
+            \item Fast feedback loops enable rapid iteration
+            \item Run after every significant change
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.5cm}
+    \textbf{Failure Analysis}
+    \begin{itemize}
+        \item Log all failures for systematic analysis
+        \item Store full context of failed retrievals
+        \item Look for patterns in failure modes
+    \end{itemize}
+\end{frame}
+
+% Case Study: Due Diligence Summaries
+\begin{frame}
+    \frametitle{Case Study: Due Diligence Summaries \& Missing Experts}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{The Challenge}
+        \begin{itemize}
+            \item Consulting firm conducting M\&A due diligence
+            \item AI summaries missed half of relevant expert quotes
+            \item Only 3 of 6 experts cited on key topics (50\% recall)
+            \item Low recall undermined consultant confidence
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{The Solution}
+        \begin{itemize}
+            \item Created "ground truth" set tagging who said what
+            \item Refined chunk boundaries and indexing strategy
+            \item Recall improved from 50\% to 90\%
+            \item Systematic evaluation led to rapid improvement
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Key Takeaway:} Small "gold set" evaluation + refined chunking dramatically improves system credibility
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame} 

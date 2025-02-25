@@ -1,0 +1,518 @@
+% Specialized Retrieval Methods Section
+
+% Hybrid Search Implementation - Split into two slides
+\begin{frame}
+    \frametitle{Hybrid Search: Combining Approaches}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Lexical Search}
+        \begin{itemize}
+            \item Exact keyword matching
+            \item Based on BM25, TF-IDF
+            \item Great for precise terms
+            \item Example: Elasticsearch
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{Semantic Search}
+        \begin{itemize}
+            \item Meaning-based matching
+            \item Uses embeddings
+            \item Great for concepts
+            \item Handles synonyms
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.5cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!10, text width=8cm, align=center, padding=0.3cm] {
+                \textbf{Hybrid Search:} Combines strengths of both approaches
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hybrid Search: Implementation}
+    \begin{itemize}
+        \item Weight results based on query characteristics
+        \begin{itemize}
+            \item Adjust weights dynamically based on query type
+            \item Use query classifier to determine optimal weights
+        \end{itemize}
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{When to favor each approach:}
+    \begin{itemize}
+        \item \textbf{Lexical}: Specific terms, codes, IDs, exact phrases
+        \item \textbf{Semantic}: Concepts, themes, topics, intentions
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Example:} "Q2 2023 revenue" → 70% lexical, 30% semantic\\
+                "Growth strategy reasons" → 20% lexical, 80% semantic
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Metadata Enhancement - Split into two slides
+\begin{frame}
+    \frametitle{Metadata Enhancement: Extraction}
+    \begin{itemize}
+        \item Extract structured data during ingestion
+    \end{itemize}
+    
+    \begin{columns}
+        \column{0.33\textwidth}
+        \textbf{Temporal}
+        \begin{itemize}
+            \item Dates
+            \item Time periods
+            \item Fiscal quarters
+            \item Years
+        \end{itemize}
+        
+        \column{0.33\textwidth}
+        \textbf{Entities}
+        \begin{itemize}
+            \item Companies
+            \item People
+            \item Products
+            \item Categories
+        \end{itemize}
+        
+        \column{0.33\textwidth}
+        \textbf{Document}
+        \begin{itemize}
+            \item Doc type
+            \item Sections
+            \item Importance
+            \item Source
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=8cm, align=center, padding=0.3cm] {
+                \textbf{Key insight:} Rich metadata enables powerful filtering
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Metadata Enhancement: Filtering}
+    \begin{itemize}
+        \item Create filters based on document attributes
+        \begin{itemize}
+            \item Filter by date range, document type, entity
+            \item Combine filters with semantic search
+            \item Improve precision without hurting recall
+        \end{itemize}
+        \item Enable faceted search capabilities
+        \begin{itemize}
+            \item Allow users to narrow results by metadata
+            \item Provide context-aware filtering options
+        \end{itemize}
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!10, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Example:} "Revenue for Q2 2023 in North America region"\\
+                \texttt{embedding\_search(query) AND date="Q2 2023" AND region="NA"}
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Specialized Indices - Split into two slides
+\begin{frame}
+    \frametitle{Specialized Indices: Content Types}
+    \begin{itemize}
+        \item Create separate indices for different content types
+    \end{itemize}
+    
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Text Documents}
+        \begin{itemize}
+            \item Reports
+            \item Articles
+            \item Narratives
+            \item Analysis
+        \end{itemize}
+        
+        \textbf{Tabular Data}
+        \begin{itemize}
+            \item Financial statements
+            \item Metrics tables
+            \item KPI dashboards
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{Visual Content}
+        \begin{itemize}
+            \item Charts
+            \item Graphs
+            \item Diagrams
+        \end{itemize}
+        
+        \textbf{Structured Data}
+        \begin{itemize}
+            \item SQL
+            \item JSON
+            \item XML
+            \item Code
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Specialized Indices: Chunking Strategies}
+    \begin{itemize}
+        \item Optimize chunking strategy per content type
+    \end{itemize}
+    
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Text}
+        \begin{itemize}
+            \item Semantic paragraphs
+            \item Fixed-size chunks
+            \item Sliding window
+        \end{itemize}
+        
+        \textbf{Tables}
+        \begin{itemize}
+            \item Preserve headers
+            \item Keep context
+            \item Include table titles
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{Code}
+        \begin{itemize}
+            \item Function-level chunks
+            \item Class-level chunks
+            \item Keep imports
+        \end{itemize}
+        
+        \textbf{Specialized}
+        \begin{itemize}
+            \item Entity index
+            \item Time-series index
+            \item KPI index
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+% Tool-Based Approach - Split into two slides
+\begin{frame}
+    \frametitle{Tool-Based Approach: Interfaces}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Key concept:} Define specialized search tools with clear interfaces
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \vspace{0.3cm}
+    \textbf{Tool Design Principles}
+    \begin{itemize}
+        \item Define clear interfaces for each specialized retrieval method
+        \begin{itemize}
+            \item Consistent input/output formats
+            \item Well-defined parameters and options
+            \item Clear documentation and examples
+        \end{itemize}
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Example Interface:}\\
+                \texttt{table\_search(query, date\_range, metrics=["revenue", "margin"])}
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Key Insights for Week 3
+\begin{frame}
+    \frametitle{Week 3: Key Insights}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Specialized Retrieval: Beyond Basic Search}
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \begin{itemize}
+        \item \textbf{Implement hybrid search} combining lexical and semantic approaches
+        \begin{itemize}
+            \item Lexical: Exact matches, codes, IDs, specific terms
+            \item Semantic: Concepts, themes, intentions, synonyms
+        \end{itemize}
+        \item \textbf{Extract rich metadata} during document ingestion
+        \item \textbf{Create specialized indices} for different content types
+        \begin{itemize}
+            \item Text, tables, code, images each need different handling
+        \end{itemize}
+        \item \textbf{Design tool-based interfaces} for specialized retrieval methods
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Remember:} Different content types require different retrieval strategies
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Tool-Based Approach: Routing}
+    \textbf{Query Router}
+    \begin{itemize}
+        \item Create a router that selects appropriate tool(s) for each query
+        \begin{itemize}
+            \item Use LLM to classify and route queries
+            \item Consider confidence scores for tool selection
+            \item Fall back to general search when uncertain
+        \end{itemize}
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Execution Strategy}
+    \begin{itemize}
+        \item Consider parallel execution for better performance
+        \begin{itemize}
+            \item Run multiple tools simultaneously when appropriate
+            \item Merge results with intelligent ranking
+            \item Balance latency vs. thoroughness
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Query Routing Implementation - Split into two slides
+\begin{frame}
+    \frametitle{Implementing Query Routing}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Start Simple}
+        \begin{itemize}
+            \item Begin with 3-5 core tools
+            \item Focus on common query types
+            \item Add more as patterns emerge
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{Consistency Matters}
+        \begin{itemize}
+            \item Standardize tool interfaces
+            \item Common parameter formats
+            \item Predictable outputs
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Testing tip:} Create synthetic queries for each tool to validate router accuracy
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Measuring Router Performance}
+    \begin{itemize}
+        \item Test routing accuracy with synthetic queries
+        \begin{itemize}
+            \item Create test cases for each tool
+            \item Measure routing precision and recall
+            \item Identify confusion patterns between tools
+        \end{itemize}
+        \item Measure tool recall: Is the right tool being selected?
+        \begin{itemize}
+            \item Track correct tool selection rate
+            \item Monitor unnecessary tool calls
+            \item Improve router prompts based on errors
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Example Tools for Financial Domain - Split into two slides
+\begin{frame}
+    \frametitle{Financial Domain Tools (1/2)}
+    
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{\texttt{table\_search}}
+        \begin{itemize}
+            \item Finds financial tables
+            \item Preserves row/column context
+            \item Extracts precise metrics
+            \item Example: "Q2 operating margin"
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{\texttt{text\_search}}
+        \begin{itemize}
+            \item Retrieves narratives
+            \item MD\&A, risk factors
+            \item Semantic paragraph search
+            \item Example: "Revenue growth factors"
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Financial Domain Tools (2/2)}
+    
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{\texttt{entity\_lookup}}
+        \begin{itemize}
+            \item Company profiles
+            \item Key metrics
+            \item Industry data
+            \item Example: "Company X's position"
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{\texttt{time\_series}}
+        \begin{itemize}
+            \item Historical metrics
+            \item Trend analysis
+            \item Period comparisons
+            \item Example: "Revenue growth over 8 quarters"
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!10, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Start with tools that address your most common queries}
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Case Study: Construction Blueprints & Visual Summaries
+\begin{frame}
+    \frametitle{Case Study: Construction Blueprints \& Visual Summaries}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{The Challenge}
+        \begin{itemize}
+            \item Construction company needed AI to answer blueprint questions
+            \item Simple image captioning gave generic descriptions
+            \item Only ~27\% recall on specific blueprint questions
+            \item Multimodal retrieval was ineffective
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{The Solution}
+        \begin{itemize}
+            \item Prompted for detailed descriptions
+            \item "Count floors, label mechanical rooms, highlight windows"
+            \item Added specialized bounding-box extraction
+            \item Merged text + blueprint data
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Key Takeaway:} Specific extraction prompts improved recall from 27\% to 75-85\% in just days
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Key Insights for Week 4
+\begin{frame}
+    \frametitle{Week 4: Key Insights}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Query Routing: Directing Queries to the Right Tools}
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \begin{itemize}
+        \item \textbf{Implement a query router} to direct questions to specialized tools
+        \begin{itemize}
+            \item Use chain-of-thought prompting for better classification
+            \item Consider multi-tool routing for complex queries
+        \end{itemize}
+        \item \textbf{Design clear tool interfaces} with consistent parameters
+        \item \textbf{Balance precision and recall} in routing decisions
+        \item \textbf{Implement fallback mechanisms} for uncertain classifications
+        \item \textbf{Track routing accuracy} as a key performance metric
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Remember:} The right tool for the right job dramatically improves results
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Key Insights for Week 5
+\begin{frame}
+    \frametitle{Week 5: Key Insights}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Embeddings \& Reranking: Optimizing Relevance}
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \begin{itemize}
+        \item \textbf{Choose embedding models} based on domain and query types
+        \begin{itemize}
+            \item General models for broad topics
+            \item Domain-specific models for specialized fields
+        \end{itemize}
+        \item \textbf{Implement reranking} to improve precision
+        \begin{itemize}
+            \item Cross-encoders for higher accuracy
+            \item LLM-based reranking for complex relevance judgments
+        \end{itemize}
+        \item \textbf{Fine-tune embeddings} with domain-specific feedback
+        \item \textbf{Optimize chunk size} for your specific content and queries
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Remember:} Better embeddings and reranking can dramatically improve relevance
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame} 

@@ -1,0 +1,36 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{dolphin}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\title{Understanding \& Implementing RAG Systems\\for Domain-Specific Applications}
+\subtitle{A Practical Guide for MIT Student Projects}
+\author{Instructor Name}
+\date{\today}
+
+% Include section files
+\input{sections/student-understanding.tex}
+\input{sections/practical-implementation.tex}
+\input{sections/conclusion.tex}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Agenda}
+    \tableofcontents
+\end{frame}
+
+% Call the section commands
+\studentunderstandingframe
+\practicalimplementationframe
+\conclusionframe
+
+\end{document} 

@@ -1,0 +1,342 @@
+% Query Segmentation Section
+
+\begin{frame}
+    \frametitle{Segmentation: The Foundation for Improvement}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Why segment queries?} To identify specific areas for improvement
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \begin{itemize}
+        \item Moving beyond basic metrics (recall/precision)
+        \item Identifying patterns in user behavior
+        \item Prioritizing development efforts based on data
+        \item Tracking performance across different query types
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=yellow!10, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Key insight:} Summary statistics often mask important patterns
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Query Segmentation Approaches - Split into two slides
+\begin{frame}
+    \frametitle{Query Segmentation Approaches (1/2)}
+    \begin{itemize}
+        \item \textbf{Intent-based}: What is the user trying to accomplish?
+        \begin{itemize}
+            \item Information seeking vs. task completion
+            \item Exploratory vs. targeted queries
+            \item Example: "Tell me about X" vs. "How do I do Y?"
+        \end{itemize}
+        \item \textbf{Domain-based}: Which knowledge area does this touch?
+        \begin{itemize}
+            \item Subject matter categories
+            \item Technical vs. business vs. compliance
+            \item Example: Financial metrics vs. operational details
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Query Segmentation Approaches (2/2)}
+    \begin{itemize}
+        \item \textbf{Complexity-based}: Simple lookup vs. multi-step reasoning
+        \begin{itemize}
+            \item Single fact retrieval vs. synthesis across documents
+            \item Explicit vs. implicit information
+            \item Example: Direct value lookup vs. trend analysis
+        \end{itemize}
+        \item \textbf{Data-type}: Text, table, image, code, or multi-modal
+        \begin{itemize}
+            \item Different content formats require different handling
+            \item Example: Narrative text vs. tabular financial data
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Inventory vs. Capabilities - New section based on week-2.txt
+\begin{frame}
+    \frametitle{Categorizing Issues: Inventory vs. Capabilities}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{Inventory Issues}
+        \begin{itemize}
+            \item Missing content in knowledge base
+            \item Incomplete data sources
+            \item Outdated information
+            \item Gaps in document coverage
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Capability Issues}
+        \begin{itemize}
+            \item System's functional limitations
+            \item Missing metadata extraction
+            \item Lack of structured filtering
+            \item Insufficient query understanding
+        \end{itemize}
+    \end{columns}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!5, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Different solutions:} Inventory → expand corpus\\
+                Capabilities → build new functionality
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Detecting Inventory vs. Capability Gaps}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{Inventory Gap Signals}
+        \begin{itemize}
+            \item Low cosine similarities
+            \item No results from lexical search
+            \item LLM refusing to answer
+            \item Returned chunks never cited
+            \item Broken data pipelines
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Capability Gap Examples}
+        \begin{itemize}
+            \item Time-based filtering needs
+            \item Comparison across documents
+            \item Structured data extraction
+            \item Missing metadata fields
+            \item Need for specialized indices
+        \end{itemize}
+    \end{columns}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!10, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Example:} "Latest contract modifications" requires both\\
+                inventory (recent docs) and capability (time filtering)
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Segmentation Implementation - Split into smaller parts
+\begin{frame}
+    \frametitle{Implementing Query Classification}
+    \begin{itemize}
+        \item Use a classifier prompt to categorize each query
+        \begin{itemize}
+            \item Chain-of-thought prompting improves accuracy
+            \item Allow multiple categories per query when relevant
+        \end{itemize}
+    \end{itemize}
+    
+    \vspace{0.5cm}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!10, text width=8cm, align=center, padding=0.3cm] {
+                \textbf{Prompt Example:}\\
+                "Analyze this query and determine which category it belongs to. Explain your reasoning before giving your final answer."
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Tracking Segmentation Performance}
+    \begin{itemize}
+        \item Track performance metrics per segment
+        \begin{itemize}
+            \item Separate dashboards for each major category
+            \item Compare performance across segments
+        \end{itemize}
+        \item Identify segments with highest volume × lowest performance
+        \begin{itemize}
+            \item Focus improvements on high-impact areas
+            \item Prioritize based on business value
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Prioritization Framework}
+    
+    \begin{columns}
+        \column{0.6\textwidth}
+        \textbf{Prioritization Formula}
+        \begin{itemize}
+            \item Impact of answering this type of question
+            \item Query volume for the segment
+            \item Likelihood of success (can we solve it?)
+        \end{itemize}
+        
+        \column{0.4\textwidth}
+        \begin{center}
+            \begin{tikzpicture}
+                \node[draw, rounded corners, fill=yellow!10, text width=4cm, align=center, padding=0.3cm] {
+                    Priority = Impact × Volume × P(Success)
+                };
+            \end{tikzpicture}
+        \end{center}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \textbf{Decision Matrix}
+    \begin{itemize}
+        \item High satisfaction + High volume = Maintain
+        \item High satisfaction + Low volume = Promote
+        \item Low satisfaction + Low volume = Phase out
+        \item Low satisfaction + High volume = Focus here!
+    \end{itemize}
+\end{frame}
+
+% Key Insights for Week 2
+\begin{frame}
+    \frametitle{Week 2: Key Insights}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Query Segmentation: The Path to Targeted Improvements}
+            };
+        \end{tikzpicture}
+    \end{center}
+    
+    \begin{itemize}
+        \item \textbf{Segment queries} by intent, domain, complexity, and data type
+        \item \textbf{Distinguish between inventory and capability gaps}
+            \begin{itemize}
+                \item Inventory: Missing content → Add more data
+                \item Capability: System limitations → Build new features
+            \end{itemize}
+        \item \textbf{Track performance by segment} to identify specific weaknesses
+        \item \textbf{Prioritize improvements} based on impact, volume, and feasibility
+        \item \textbf{Focus on high-volume, low-satisfaction segments} first
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=green!10, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Remember:} Summary statistics often mask important patterns
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Example Segmentation for Financial Projects - Split into two slides
+\begin{frame}
+    \frametitle{Financial Query Types (1/2)}
+    \begin{itemize}
+        \item \textbf{Numerical extraction}
+        \begin{itemize}
+            \item Finding specific values in financial statements
+            \item Example: "What was the EPS in Q2 2023?"
+            \item Requires precise table extraction and entity recognition
+        \end{itemize}
+        \item \textbf{Trend analysis}
+        \begin{itemize}
+            \item Identifying patterns over time in financial data
+            \item Example: "How has the gross margin changed over the last 4 quarters?"
+            \item Requires time-series data and comparative analysis
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Financial Query Types (2/2)}
+    \begin{itemize}
+        \item \textbf{Comparative analysis}
+        \begin{itemize}
+            \item Comparing entities, periods, or metrics
+            \item Example: "How does Company X's ROI compare to industry average?"
+            \item Requires multi-document retrieval and normalization
+        \end{itemize}
+        \item \textbf{Risk assessment}
+        \begin{itemize}
+            \item Evaluating potential issues or concerns
+            \item Example: "What are the key risk factors mentioned in the report?"
+            \item Requires understanding of risk terminology and context
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Real-World Example: Construction Project}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{Initial Analysis}
+        \begin{itemize}
+            \item 80% of queries were document search
+            \item 20% were schedule-based queries
+            \item Document search had high satisfaction
+            \item Schedule queries had low satisfaction
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Time-Based Analysis}
+        \begin{itemize}
+            \item New users started with schedule queries
+            \item Poor results led to behavior change
+            \item Users learned to use document search as workaround
+            \item Masked the actual problem
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!10, text width=8.5cm, align=center, padding=0.3cm] {
+                \textbf{Solution:} Built specialized data extraction for dates and schedules\\
+                Highlighted new capability → user behavior changed back
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Case Study: Scheduling & Learned User Behavior
+\begin{frame}
+    \frametitle{Case Study: Scheduling \& Learned User Behavior}
+    
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{The Challenge}
+        \begin{itemize}
+            \item Construction management platform
+            \item New users struggled with scheduling queries
+            \item Veteran users learned workarounds
+            \item Only 20\% success rate for new users on scheduling queries
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{The Solution}
+        \begin{itemize}
+            \item Split "document search" vs. "scheduling" segments
+            \item Created specialized scheduling index
+            \item Extracted due dates and milestones
+            \item Announced new feature to users
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, rounded corners, fill=blue!5, text width=9cm, align=center, padding=0.3cm] {
+                \textbf{Key Takeaway:} Segmentation + dedicated metadata indices dramatically improve user satisfaction
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame} 
