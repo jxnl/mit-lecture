@@ -39,8 +39,12 @@
 \usepackage{pifont}
 \usepackage{wasysym} % For checkmarks
 
-% Include intro file
+% Include section files
 \input{sections/intro}
+\input{sections/context}
+\input{sections/retrieval_systems}
+\input{sections/effective_ai}
+\input{sections/career_paths}
 
 % Additional TikZ libraries for better diagrams
 \usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,shapes.multipart,decorations.pathreplacing,decorations.markings}
@@ -66,9 +70,12 @@
     \tableofcontents
 \end{frame}
 
-
 % Insert reusable frames
 \introframe
+\contextframe
+\retrievalframe
+\effectiveaiframe
+\careerpathsframe
 
 % End of presentation
 \end{document} 
